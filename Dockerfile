@@ -1,4 +1,4 @@
-FROM rust:1.74 as builder
+FROM rust:stable as builder
 
 RUN USER=root cargo new --bin rust-luau-server
 WORKDIR /rust-luau-server
@@ -14,7 +14,7 @@ COPY ./src ./src
 RUN rm ./target/release/deps/rust_luau_server*
 RUN cargo build --release
 
-FROM debian:buster-slim
+FROM debian:stable
 
 COPY --from=builder /rust-luau-server/target/release/rust-luau-server .
 

@@ -1,4 +1,4 @@
-FROM rust:stable as builder
+FROM rust:1.74 as builder
 
 RUN USER=root cargo new --bin rust-luau-server
 WORKDIR /rust-luau-server

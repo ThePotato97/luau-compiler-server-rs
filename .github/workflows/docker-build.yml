@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/rust-luau-server:latest
+          tags: ghcr.io/${{ github.repository_owner | lower }}/rust-luau-server:latest
 
       - name: Verify the image was pushed
         run: |

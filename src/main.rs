@@ -5,8 +5,22 @@ use mlua::{Compiler};
 fn index(code: String) -> String  {
     let bytecode = Compiler::new().compile(&code);
     let s = String::from_utf8_lossy(&*bytecode);
-
+    let formatted_string = bytecode.iter()
+        .map(|byte| format!("\\{}", byte))
+        .collect::<String>();
+    println!("{:?}", formatted_string);
     s.parse().unwrap()
+}
+
+#[post("/bytes", data = "<code>")]
+fn bytes(code: String) -> String  {
+    let bytecode = Compiler::new().compile(&code);
+    let s = String::from_utf8_lossy(&*bytecode);
+    let formatted_string = bytecode.iter()
+        .map(|byte| format!("\\{}", byte))
+        .collect::<String>();
+    println!("{:?}", formatted_string);
+    formatted_string
 }
 #[get("/")]
 fn instruct() -> &'static str {
@@ -15,5 +29,5 @@ fn instruct() -> &'static str {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index, instruct])
+    rocket::build().mount("/", routes![index, instruct, bytes])
 }
